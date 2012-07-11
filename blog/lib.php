@@ -540,7 +540,7 @@ function blog_get_options_for_course(stdClass $course, stdClass $user=null) {
             }
             
             // If the course is using groups (separate or visible) and the user is in a group; view entries by the users group.
-            if ($course->groupmode > 0 && ($groupid = groups_get_course_group($course))) {
+            if ($course->groupmode > 0 && ($groupid = groups_get_course_group($course)) && groups_is_member($groupid, $USER->id)) {
                 $options['courseviewgroup'] = array(
                     'string' => get_string('viewentriesbyuseraboutcourse', 'blog', groups_get_group_name($groupid)),
                     'link' => new moodle_url('/blog/index.php', array('courseid' => $course->id, 'groupid' => $groupid))
@@ -635,7 +635,7 @@ function blog_get_options_for_module($module, $user=null) {
                 );
             }
 
-            if ($groupmode > 0 && ($groupid = groups_get_activity_group($cm))) {
+            if ($groupmode > 0 && ($groupid = groups_get_activity_group($cm)) && groups_is_member($groupid, $USER->id)) {
                 $a = new stdClass;
                 $a->mod = $modulename;
                 $a->user = groups_get_group_name($groupid);
