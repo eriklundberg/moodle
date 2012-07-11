@@ -531,11 +531,21 @@ function blog_get_options_for_course(stdClass $course, stdClass $user=null) {
     if (has_capability('moodle/blog:view', $coursecontext)) {
         // We can view!
         if ($CFG->bloglevel >= BLOG_SITE_LEVEL) {
-            // View entries about this course
-            $options['courseview'] = array(
-                'string' => get_string('viewcourseblogs', 'blog'),
-                'link' => new moodle_url('/blog/index.php', array('courseid'=>$course->id))
-            );
+            // If the course not is using separate groups; view all entries associated with this course 
+            if ($course->groupmode != 1) {
+                $options['courseview'] = array(
+                    'string' => get_string('viewcourseblogs', 'blog'),
+                    'link' => new moodle_url('/blog/index.php', array('courseid'=>$course->id))
+                );
+            }
+            
+            // If the course is using groups (separate or visible) and the user is in a group; view entries by the users group.
+            if ($course->groupmode > 0 && ($groupid = groups_get_course_group($course))) {
+                $options['courseviewgroup'] = array(
+                    'string' => get_string('viewentriesbyuseraboutcourse', 'blog', groups_get_group_name($groupid)),
+                    'link' => new moodle_url('/blog/index.php', array('courseid' => $course->id, 'groupid' => $groupid))
+                );
+            }
         }
         // View MY entries about this course
         $options['courseviewmine'] = array(
