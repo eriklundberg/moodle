@@ -622,13 +622,31 @@ function blog_get_options_for_module($module, $user=null) {
 
         // We can view!
         if ($CFG->bloglevel >= BLOG_SITE_LEVEL) {
-            // View all entries about this module
-            $a = new stdClass;
-            $a->type = $modulename;
-            $options['moduleview'] = array(
-                'string' => get_string('viewallmodentries', 'blog', $a),
-                'link' => new moodle_url('/blog/index.php', array('modid'=>$module->id))
-            );
+	        $cm = get_coursemodule_from_id($module->modname, $module->id);
+	        $groupmode = groups_get_activity_groupmode($cm);
+
+            // View all entries about this module	
+	        if ($groupmode != 1) {
+                $a = new stdClass;
+                $a->type = $modulename;
+                $options['moduleview'] = array(
+                    'string' => get_string('viewallmodentries', 'blog', $a),
+                    'link' => new moodle_url('/blog/index.php', array('modid'=>$module->id))
+                );
+            }
+
+            if ($groupmode > 0 && ($groupid = groups_get_activity_group($cm))) {
+                $a = new stdClass;
+                $a->mod = $modulename;
+                $a->user = groups_get_group_name($groupid);
+                $options['moduleviewgroup'] = array(
+	                'string' => get_string('blogentriesbyuseraboutmodule', 'blog', $a),
+	                'link' => new moodle_url('/blog/index.php', array(
+                        'modid' => $module->id,
+                        'groupid' => $groupid
+                    ))	
+                );
+            }
         }
         // View MY entries about this module
         $options['moduleviewmine'] = array(
