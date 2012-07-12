@@ -532,7 +532,7 @@ function blog_get_options_for_course(stdClass $course, stdClass $user=null) {
         // We can view!
         if ($CFG->bloglevel >= BLOG_SITE_LEVEL) {
             // If the course not is using separate groups; view all entries associated with this course 
-            if ($course->groupmode != 1) {
+            if ($course->groupmode != 1 || has_capability('mod/assign:grade', $coursecontext)) {
                 $options['courseview'] = array(
                     'string' => get_string('viewcourseblogs', 'blog'),
                     'link' => new moodle_url('/blog/index.php', array('courseid'=>$course->id))
@@ -626,7 +626,7 @@ function blog_get_options_for_module($module, $user=null) {
 	        $groupmode = groups_get_activity_groupmode($cm);
 
             // View all entries about this module	
-	        if ($groupmode != 1) {
+	        if ($groupmode != 1 || has_capability('mod/assign:grade', $modcontext)) {
                 $a = new stdClass;
                 $a->type = $modulename;
                 $options['moduleview'] = array(
