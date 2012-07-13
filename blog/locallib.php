@@ -297,6 +297,10 @@ class blog_entry implements renderable {
         $returnurl = '';
 
         $this->delete_attachments();
+        
+        if (!empty($CFG->useblogassociations)) {
+            $this->remove_associations();
+        }
 
         $DB->delete_records('post', array('id' => $this->id));
         tag_set('post', $this->id, array());
