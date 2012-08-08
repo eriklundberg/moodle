@@ -538,14 +538,14 @@ function blog_get_options_for_course(stdClass $course, stdClass $user=null) {
                     'link' => new moodle_url('/blog/index.php', array('courseid'=>$course->id))
                 );
             }
-            
+
             // If the course is using groups (separate or visible) and the user is in a group; view entries by the users group.
             if ($course->groupmode > 0 && ($groupid = groups_get_course_group($course)) && groups_is_member($groupid, $USER->id)) {
                 $options['courseviewgroup'] = array(
                     'string' => get_string('viewentriesbyuseraboutcourse', 'blog', groups_get_group_name($groupid)),
                     'link' => new moodle_url('/blog/index.php', array('courseid' => $course->id, 'groupid' => $groupid))
                 );
-                
+
             // If the course is using groups but the user is not a member of a group and is capable of grading, 
             // show entries assocated to each group.
             } else if ($course->groupmode > 0 && has_capability('mod/assign:grade', $coursecontext)) {
@@ -635,11 +635,11 @@ function blog_get_options_for_module($module, $user=null) {
 
         // We can view!
         if ($CFG->bloglevel >= BLOG_SITE_LEVEL) {
-	        $cm = get_coursemodule_from_id($module->modname, $module->id);
-	        $groupmode = groups_get_activity_groupmode($cm);
+            $cm = get_coursemodule_from_id($module->modname, $module->id);
+            $groupmode = groups_get_activity_groupmode($cm);
 
             // View all entries about this module	
-	        if ($groupmode != 1 || has_capability('mod/assign:grade', $modcontext)) {
+            if ($groupmode != 1 || has_capability('mod/assign:grade', $modcontext)) {
                 $a = new stdClass;
                 $a->type = $modulename;
                 $options['moduleview'] = array(
@@ -647,15 +647,15 @@ function blog_get_options_for_module($module, $user=null) {
                     'link' => new moodle_url('/blog/index.php', array('modid'=>$module->id))
                 );
             }
-            
+
             // If the course uses groups and the user is member of a group, let the user read all entries about this module by his group.
             if ($groupmode > 0 && ($groupid = groups_get_activity_group($cm)) && groups_is_member($groupid, $USER->id)) {
                 $a = new stdClass;
                 $a->mod = $modulename;
                 $a->user = groups_get_group_name($groupid);
                 $options['moduleviewgroup'] = array(
-	                'string' => get_string('blogentriesbyuseraboutmodule', 'blog', $a),
-	                'link' => new moodle_url('/blog/index.php', array(
+                    'string' => get_string('blogentriesbyuseraboutmodule', 'blog', $a),
+                    'link' => new moodle_url('/blog/index.php', array(
                         'modid' => $module->id,
                         'groupid' => $groupid
                     ))	
