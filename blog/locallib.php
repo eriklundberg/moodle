@@ -911,7 +911,7 @@ class blog_filter_user extends blog_filter {
             $this->overrides = array('group');
 
         } elseif ($this->type == 'group') {
-            $this->overrides = array('course', 'site');
+            $this->overrides = array('site');
 
             $this->tables['gm'] = 'groups_members';
             $this->conditions[] = 'p.userid = gm.userid';
