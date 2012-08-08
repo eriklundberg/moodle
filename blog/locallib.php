@@ -1088,10 +1088,8 @@ class blog_filter_user extends blog_filter {
                 $coursecontext     = get_context_instance(CONTEXT_COURSE, $DB->get_field('groups', 'courseid', array('id' => $this->id)));
                 $this->tables['ba'] = 'blog_association';
                 $this->conditions[] = 'gm.groupid = ?';
-                $this->conditions[] = 'ba.contextid = ?';
                 $this->conditions[] = 'ba.blogid = p.id';
                 $this->params[]     = $this->id;
-                $this->params[]     = $coursecontext->id;
             }
         }
 
