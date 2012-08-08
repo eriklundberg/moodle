@@ -666,7 +666,7 @@ function blog_get_options_for_module($module, $user=null) {
             } else if ($groupmode > 0 && has_capability('mod/assign:grade', $modcontext)) {
                 foreach (groups_get_all_groups($cm->course) as $groupid => $group) {
                     $a = new stdClass;
-                    $a->mod = $module_name;
+                    $a->mod = $modulename;
                     $a->user = groups_get_group_name($groupid);
                     $options['moduleviewgroup'.$groupid] = array(
                         'string' => get_string('blogentriesbyuseraboutmodule', 'blog', $a),
@@ -681,7 +681,7 @@ function blog_get_options_for_module($module, $user=null) {
             } else if ($groupmode > 0 && has_capability('mod/assign:grade', $modcontext)) {
                 foreach (groups_get_all_groups($cm->course) as $groupid => $group) {
                     $a = new stdClass;
-                    $a->mod = $module_name;
+                    $a->mod = $modulename;
                     $a->user = groups_get_group_name($groupid);
                     $options['moduleviewgroup'.$groupid] = array(
                         'string' => get_string('blogentriesbyuseraboutmodule', 'blog', $a),
