@@ -391,6 +391,11 @@ class blog_entry {
         $sitecontext = get_context_instance(CONTEXT_SYSTEM);
         $entry = $this;
 
+        // Unset the values for associations to avoid that an old association remains if the user changes the association from 
+        // module to course or vice versa.
+        unset($entry->modassoc);
+        unset($entry->courseassoc);
+
         $this->form = $form;
         foreach ($params as $var => $val) {
             $entry->$var = $val;
