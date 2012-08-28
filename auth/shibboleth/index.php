@@ -41,6 +41,11 @@
         if ($shibbolethauth->user_login($frm->username, $frm->password)) {
 
             $user = authenticate_user_login($frm->username, $frm->password);
+
+            if (!$user && $CFG->authpreventaccountcreation) {
+                redirect($pluginconfig->noaccounturl);
+            }
+
             enrol_check_plugins($user);
             session_set_user($user);
 

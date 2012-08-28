@@ -122,7 +122,7 @@ urn:mace:organization2:providerID, Example Organization 2, /Shibboleth.sso/WAYF/
 <tr valign="top">
     <td align="right"><label for="changepasswordurl"><?php print_string('auth_shib_changepasswordurl', 'auth_shibboleth') ?>: </label></td>
     <td>
-        <input name="changepasswordurl" id="changepasswordurl" type="text" value="<?php echo $config->changepasswordurl ?>" />
+        <input name="changepasswordurl" id="changepasswordurl" type="text" size="30" value="<?php echo $config->changepasswordurl ?>" />
         <?php
 
         if (isset($err['changepasswordurl'])) {
@@ -134,6 +134,15 @@ urn:mace:organization2:providerID, Example Organization 2, /Shibboleth.sso/WAYF/
     <td><?php print_string('changepasswordhelp', 'auth') ?></td>
 </tr>
 
+<tr valign="top">
+    <td align="right"><label for="noaccounturl"><?php print_string('auth_shib_noaccounturl', 'auth_shibboleth') ?>:</label></td>
+    <td>
+        <input name="noaccounturl" id="noaccounturl" type="text" size="30" value="<?php echo $config->noaccounturl ?>" />
+    </td>
+    <td>
+        <?php print_string('auth_shib_noaccounturl_description', 'auth_shibboleth') ?>
+    </td>
+</tr>
 
 
 <?php

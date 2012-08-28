@@ -250,6 +250,10 @@ class auth_plugin_shibboleth extends auth_plugin_base {
             $config->changepasswordurl = '';
         }
 
+        if (!isset($config->noaccounturl)) {
+            $config->noaccounturl = '';
+        }
+
         if (!isset($config->login_name)) {
             $config->login_name = 'Shibboleth Login';
         }
@@ -279,6 +283,7 @@ class auth_plugin_shibboleth extends auth_plugin_base {
         set_config('convert_data',      $config->convert_data,      'auth/shibboleth');
         set_config('auth_instructions', $config->auth_instructions, 'auth/shibboleth');
         set_config('changepasswordurl', $config->changepasswordurl, 'auth/shibboleth');
+        set_config('noaccounturl',      $config->noaccounturl, 'auth/shibboleth');
 
         // Overwrite alternative login URL if integrated WAYF is used
         if (isset($config->alt_login) && $config->alt_login == 'on'){
