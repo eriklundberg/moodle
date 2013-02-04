@@ -78,24 +78,18 @@ class mod_assign_generator extends phpunit_module_generator {
         if (!isset($record->allowsubmissionsfromdate)) {
             $record->allowsubmissionsfromdate = 0;
         }
-        if (!isset($record->assignsubmission_onlinetext_enabled)) {
-            $record->assignsubmission_onlinetext_enabled = 0;
+
+        // If a submission or feedback plugin is not activated, make sure it's disabled.
+        foreach(array('assignsubmission', 'assignfeedback') as $plugintype) {
+            $installedplugins = get_plugin_list($plugintype);
+            foreach($installedplugins as $pluginname => $path) {
+                $enabledvariable = $plugintype.'_'.$pluginname.'_enabled';
+                if (!isset($record->{$enabledvariable})) {
+                    $record->{$enabledvariable} = 0;
+                }
+            }
         }
-        if (!isset($record->assignsubmission_file_enabled)) {
-            $record->assignsubmission_file_enabled = 0;
-        }
-        if (!isset($record->assignsubmission_comments_enabled)) {
-            $record->assignsubmission_comments_enabled = 0;
-        }
-        if (!isset($record->assignfeedback_comments_enabled)) {
-            $record->assignfeedback_comments_enabled = 0;
-        }
-        if (!isset($record->assignfeedback_file_enabled)) {
-            $record->assignfeedback_file_enabled = 0;
-        }
-        if (!isset($record->assignfeedback_offline_enabled)) {
-            $record->assignfeedback_offline_enabled = 0;
-        }
+
         if (!isset($record->grade)) {
             $record->grade = 100;
         }
